@@ -13,8 +13,6 @@
 
 ## 实现功能
 
-- [ ] 
-- [ ] 
 - [x] 二维码扫描
 - [x] 二维码生成
 - [x] 带logo的二维码生成
@@ -214,8 +212,8 @@ NS_ASSUME_NONNULL_END
 ```
 
 ## 截图：
-
-<img src="./Screenshots/IMG_1877.PNG" width="30%"><img src="./Screenshots/IMG_1878.PNG" width="30%"><img src="./Screenshots/IMG_1879.PNG" width="30%"><img src="./Screenshots/IMG_1881.PNG" width="30%">
+https://github.com/dearxiaomu/ZZQRCode/blob/master/Screenshots/IMG_1877.PNG
+<img src="https://github.com/dearxiaomu/ZZQRCode/blob/master/Screenshots/IMG_1877.PNG" width="30%"><img src="https://github.com/dearxiaomu/ZZQRCode/blob/master/Screenshots/IMG_1878.PNG" width="30%"><img src="https://github.com/dearxiaomu/ZZQRCode/blob/master/Screenshots/IMG_1879.PNG" width="30%"><img src="https://github.com/dearxiaomu/ZZQRCode/blob/master/Screenshots/IMG_1881.PNG" width="30%">
 
 
 
