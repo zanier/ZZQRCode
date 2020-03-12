@@ -1,5 +1,5 @@
 # ZZQRCode
-通过原生API封装的二维码扫描与识别组件，可以扫描二维码、识别二维码图片、生成自定义二维码功能，并具有微信的开启闪光灯、镜头缩放等功能。 
+​		通过原生API封装的二维码扫描与识别组件，可以扫描二维码、识别二维码图片、生成自定义二维码功能，并具有微信的开启闪光灯、镜头缩放等功能。 
 
 ## 使用前
 
@@ -141,40 +141,41 @@ NS_ASSUME_NONNULL_END
 二维码的扫描图像界面，内部通过 **ZZQRCodeReader** 实现扫描和显示能能，自身可当做普通的 **UIView** 来使用。
 
 ```objective-c
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import <Photos/Photos.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZZQRCodeReader : NSObject
+@interface ZZQRCodeReaderView : UIView
 
-/// 初始化方法
-+ (instancetype)readerWithMetadataObjectTypes:(NSArray *)metadataObjectTypes delegate:(id<AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate>)delegate;
+/// 创建二维码扫描界面
++ (instancetype)QRCodeReaderViewWithFrame:(CGRect)frame;
 
-// 设置扫描区域
+/// 初始化扫描界面
+/// @param frame 界面 frame
+/// @param area 扫描区域，传入 CGRectZero 则设置为默认的区域
+/// @param types 扫码的类型
+/// @param handler 扫码的回调
+- (instancetype)initWithFrame:(CGRect)frame scanArea:(CGRect)area scanTypes:(nullable NSArray<AVMetadataObjectType> *)types handler:(nullable void (^)(NSString * _Nullable string, ZZQRCodeReaderView * _Nonnull readerView))handler;
+
+/// 扫描区域
 @property (nonatomic, assign) CGRect scanArea;
-
-/// 当前的识别格式
-@property (nonatomic, strong) NSArray<AVMetadataObjectType> *metadataObjectTypes;
-
-/// 预览层
-@property (readonly) AVCaptureVideoPreviewLayer *previewLayer;
-
-@property (nonatomic, weak) id<AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate> delegate;
 
 /// 扫描状态
 @property (readonly) BOOL isScanning;
 
-/// 设置镜头的缩放系数
-@property (readonly) CGFloat videoZoomFactor;
-- (void)setVideoZoomFactor:(CGFloat)factor;
-- (void)changeVideoZoomFactor;
-
 /// 开始扫描
 - (void)startScan;
+
 /// 停止扫描
 - (void)stopScan;
+
+/// 设置扫描成功的回调
+- (void)setHandler:(void (^)(NSString * _Nullable string, ZZQRCodeReaderView * _Nonnull readerView))handler;
+
+/// 设置亮度变化的回调
+- (void)setBrightnessHandler:(void (^)(CGFloat brightness, ZZQRCodeReaderView * _Nonnull readerView))handler;
 
 @end
 
@@ -220,4 +221,5 @@ NS_ASSUME_NONNULL_END
 ## 注意事项：
 
 * 使用前注意添加 info.plist 字段，使用中注意权限状态的判断。
+* 在使用某些硬件相关的 API 如闪光灯时，一定要使用系统提供的加解锁操作 `[captureDevice lockForConfiguration:nil]`。
 * 保存二维码是需要先将图片绘制一次，否则无法保存，例如 Demo 中的 `GenerateQRCodeViewController.m` 中的  `saveButtonAction` 方法。
